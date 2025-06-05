@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Schedule Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="content">
+            <h2>Generated Schedule</h2>
+            <table>
+                <tr>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th class="no-select">Type</th>
+                </tr>
+                {% for item in schedule %}
+                <tr>
+                    <td>{{ item.start }}</td>
+                    <td>{{ item.end }}</td>
+                    <td class="no-select">{{ item.label }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <br><a href="/" style="color: #00ff00; font-weight: bold;">← Generate Another</a>
+        </div>
+        <footer>
+            Made by Christian Kumar Yadav in loving memory of Anastasia Yadav.
+            Proud Collaborators:
+            Neeraj Pepsu, Sanni Dancer, Durgesh Nai
+        </footer>
+    </div>
+    <canvas id="matrixCanvas"></canvas>
+<script>
+// matrix rain effect same as before
+const canvas = document.getElementById('matrixCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+const letters = "アァイイウエオカキクケコサシスセソタチツテトナニヌネノ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const fontSize = 14;
+const columns = canvas.width / fontSize;
+const drops = Array.from({ length: columns }, () => 1);
+function drawMatrix() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#0F0";
+    ctx.font = fontSize + "px monospace";
+    for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        const x = i * fontSize;
+        const y = drops[i] * fontSize;
+        ctx.fillText(text, x, y);
+        if (y > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+        }
+        drops[i]++;
+    }
+}
+setInterval(drawMatrix, 33);
+</script>
+</body>
+</html>
