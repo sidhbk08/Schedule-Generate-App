@@ -54,7 +54,7 @@
     const drops = Array.from({ length: columns }, () => 1);
 
     function draw() {
-        // Slightly transparent black background for trail effect
+        
         ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -72,12 +72,11 @@
             drops[index]++;
         });
 
-        requestAnimationFrame(draw); // smoother than setInterval
+        requestAnimationFrame(draw); 
     }
 
     draw();
 
-    // Optional: update canvas size on resize
     window.addEventListener('resize', () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
